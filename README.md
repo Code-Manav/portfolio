@@ -1,29 +1,20 @@
-# Developer Portfolio
+# Portfolio — Manav Shori
 
-Welcome to the repository for my personal developer portfolio! This project showcases my coding projects, technical skills, and professional experience.
-
-
-## Live Demo
-Check out the live version of my portfolio deployed on Vercel:
-**[https://kevins-dev-portfolio.vercel.app/](https://kevins-dev-portfolio.vercel.app/)**
+Senior Full-Stack Software Engineer specializing in React, Next.js, and Node.js.
 
 ## ✨ Features
-- **Modern & Premium UI**: A clean, dynamic, and sleek user interface.
-- **Fully Responsive**: Optimized seamlessly across desktops, tablets, and mobile devices.
-- **Working Contact Form**: Integrated with EmailJS to forward messages directly to my inbox without needing a custom backend.
-- **Fast Performance**: Built on Vite for lightning-fast hot module replacement (HMR) and optimized build times.
+- Modern, animated UI with Framer Motion
+- Fully responsive across all devices
+- Contact form integrated with EmailJS
+- Built with Vite for fast performance
 
-## 🛠️ Technology Stack
-This project leverages modern frontend tools and frameworks:
+## 🛠️ Tech Stack
 
-- **Core Framework**: [React 19](https://react.dev/)
-- **Build Tool**: [Vite](https://vitejs.dev/)
-- **Language**: [TypeScript](https://www.typescriptlang.org/)
-- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
-- **Routing**: [React Router](https://reactrouter.com/)
-- **Icons**: [React Icons](https://react-icons.github.io/react-icons/)
-- **Email Service**: [EmailJS](https://www.emailjs.com/)
-- **Hosting**: [Vercel](https://vercel.com/)
+- React 19, TypeScript, Vite
+- Tailwind CSS v4
+- Framer Motion
+- React Router, React Icons
+- EmailJS
 
 ## 🚀 Getting Started Locally
 
@@ -36,8 +27,8 @@ Ensure you have [Node.js](https://nodejs.org/) (version 18+ recommended) install
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/kevinthomas9898/portfolio.git
-   cd portfolio
+   git clone <your-repo-url>
+   cd portfolio-main
    ```
 
 2. **Install dependencies:**
@@ -71,4 +62,4 @@ This commands compiles TypeScript and bundles the app using Vite into the `dist`
 
 ## 📫 Get In Touch
 
-Feel free to connect with me! You can reach me through the contact form on my [live portfolio site](https://kevins-dev-portfolio.vercel.app/).
+Feel free to reach out through the contact form on this portfolio.
