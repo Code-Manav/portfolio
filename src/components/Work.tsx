@@ -5,8 +5,8 @@ import WorkCardData from './WorkCardData';
 import { FadeInUp } from './';
 
 interface ProjectData {
-  title: string; description: string; demo: string;
-  download: string; tags: string[]; featured: boolean; imgsrc: string;
+  title: string; description: string;
+  tags: string[]; featured: boolean; imgsrc: string;
 }
 
 const r = (a: number, b: number) => Math.random() * (b - a) + a;
@@ -162,7 +162,7 @@ const Work: React.FC = () => {
         {projects.map((val, i) => (
           <motion.div key={i} variants={gridItem}>
             <WorkCard imgsrc={val.imgsrc} title={val.title} description={val.description}
-              demo={val.demo} download={val.download} tags={val.tags} featured={val.featured} />
+              tags={val.tags} featured={val.featured} />
           </motion.div>
         ))}
       </motion.div>
