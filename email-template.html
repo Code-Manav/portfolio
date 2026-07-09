@@ -1,0 +1,117 @@
+<div style="font-family: system-ui, sans-serif, Arial; font-size: 12px; max-width: 600px; margin: 0 auto;">
+  <div style="
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 24px 20px;
+    border-radius: 8px 8px 0 0;
+    text-align: center;
+  ">
+    <div style="font-size: 32px; margin-bottom: 8px;" role="img">📬</div>
+    <div style="color: #ffffff; font-size: 18px; font-weight: 600;">
+      New Message Received
+    </div>
+  </div>
+
+  <div style="padding: 24px 20px; background: #ffffff;">
+    <div style="color: #2c3e50; font-size: 14px; margin-bottom: 16px;">
+      A message from <strong>{{user_name}}</strong> has been received. Kindly respond at your earliest convenience.
+    </div>
+
+    <div style="
+      margin: 20px 0;
+      padding: 16px 0;
+      border-width: 1px 0;
+      border-style: dashed;
+      border-color: #e0e0e0;
+    ">
+      <table role="presentation" style="width: 100%; border-collapse: collapse;">
+        <tr>
+          <td style="
+            vertical-align: top;
+            padding: 8px 16px 8px 0;
+            color: #888;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            white-space: nowrap;
+            width: 80px;
+          ">
+            Subject
+          </td>
+          <td style="vertical-align: top; padding: 8px 0; color: #2c3e50; font-size: 15px; font-weight: 600;">
+            {{user_subject}}
+          </td>
+        </tr>
+        <tr>
+          <td style="
+            vertical-align: top;
+            padding: 8px 16px 8px 0;
+            color: #888;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            white-space: nowrap;
+          ">
+            From
+          </td>
+          <td style="vertical-align: top; padding: 8px 0; color: #2c3e50; font-size: 15px;">
+            {{user_name}} &lt;{{user_email}}&gt;
+          </td>
+        </tr>
+        <tr>
+          <td style="
+            vertical-align: top;
+            padding: 8px 16px 8px 0;
+            color: #888;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            white-space: nowrap;
+          ">
+            Time
+          </td>
+          <td style="vertical-align: top; padding: 8px 0; color: #95a5a6; font-size: 13px;">
+            {{time}}
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div style="margin: 20px 0;">
+      <div style="
+        color: #888;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 8px;
+      ">
+        Message
+      </div>
+      <div style="
+        background: #f8f9fa;
+        border-left: 3px solid #667eea;
+        padding: 16px;
+        border-radius: 4px;
+        color: #2c3e50;
+        font-size: 14px;
+        line-height: 1.6;
+      ">
+        {{message}}
+      </div>
+    </div>
+  </div>
+
+  <div style="
+    padding: 16px 20px;
+    background: #f8f9fa;
+    border-radius: 0 0 8px 8px;
+    text-align: center;
+    color: #95a5a6;
+    font-size: 11px;
+  ">
+    This email was sent from your portfolio contact form.
+  </div>
+</div>
