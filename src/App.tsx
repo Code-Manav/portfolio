@@ -4,6 +4,7 @@ import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import ReactGA from 'react-ga4';
 import { Home, About, Project, Contact, NotFound } from './routes';
 import { ScrollToTop, MouseFollower, BackgroundParticles } from './components';
+import { isTouchDevice } from './lib/isTouchDevice';
 
 const GA_TRACKING_ID = import.meta.env.VITE_GA_TRACKING_ID;
 if (GA_TRACKING_ID) {
@@ -46,7 +47,7 @@ const App: React.FC = () => {
       />
 
       <BackgroundParticles />
-      <MouseFollower />
+      {!isTouchDevice && <MouseFollower />}
       <RouteScrollToTop />
       <ScrollToTop />
 

@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FiArrowLeft } from 'react-icons/fi';
+import { isTouchDevice } from '../lib/isTouchDevice';
 
 const glitchChars = '!<>-_\\/[]{}—=+*^?#________'.split('');
 
@@ -236,7 +237,7 @@ const MagneticGoHome: React.FC = () => {
   const [pos, setPos] = useState({ x: 0, y: 0 });
 
   const onMove = (e: React.MouseEvent) => {
-    if (!ref.current) return;
+    if (isTouchDevice || !ref.current) return;
     const r = ref.current.getBoundingClientRect();
     const dx = e.clientX - r.left - r.width / 2;
     const dy = e.clientY - r.top - r.height / 2;

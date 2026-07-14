@@ -39,7 +39,17 @@ const Work: React.FC = () => {
     target: sectionRef, offset: ['start end', 'end start'],
   });
 
-  const projects = WorkCardData as ProjectData[];
+  const projects = useMemo(() => {
+    const all = WorkCardData as ProjectData[];
+    if (activeFilter === 'All') return all;
+    return all.filter((p) => {
+      const tags = p.tags.map((t) => t.toLowerCase());
+      if (activeFilter === 'React') return tags.some((t) => t === 'react' || t === 'next.js');
+      if (activeFilter === 'Node.js') return tags.includes('node.js');
+      if (activeFilter === 'Full-Stack') return tags.includes('node.js') && tags.some((t) => t === 'react' || t === 'next.js' || t === 'angular');
+      return true;
+    });
+  }, [activeFilter]);
 
   const titleChars = useMemo(() => 'PROJECTS.'.split(''), []);
 
@@ -153,14 +163,14 @@ const Work: React.FC = () => {
 
       {/* Grid */}
       <motion.div
+        key={activeFilter}
         className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7"
         variants={sectionVariants}
         initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: '-50px' }}
+        animate="visible"
       >
         {projects.map((val, i) => (
-          <motion.div key={i} variants={gridItem}>
+          <motion.div key={`${activeFilter}-${i}`} variants={gridItem}>
             <WorkCard imgsrc={val.imgsrc} title={val.title} description={val.description}
               tags={val.tags} featured={val.featured} />
           </motion.div>

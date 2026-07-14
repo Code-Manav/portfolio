@@ -9,6 +9,7 @@ import {
   type MotionValue,
 } from 'framer-motion';
 import { FadeInUp } from './';
+import { isTouchDevice } from '../lib/isTouchDevice';
 
 /* ─── Text scramble helper ─── */
 const chars = '!<>-_\\/[]{}—=+*^?#________';
@@ -203,7 +204,7 @@ const TiltCard: React.FC<{
   /* ── Mouse ── */
   const handleMove = useCallback(
     (e: React.MouseEvent) => {
-      if (!ref.current) return;
+      if (isTouchDevice || !ref.current) return;
       const rect = ref.current.getBoundingClientRect();
       const cx = rect.left + rect.width / 2;
       const cy = rect.top + rect.height / 2;
@@ -226,11 +227,13 @@ const TiltCard: React.FC<{
   );
 
   const handleEnter = useCallback(() => {
+    if (isTouchDevice) return;
     setIsHovered(true);
     startScramble();
   }, [startScramble]);
 
   const handleLeave = useCallback(() => {
+    if (isTouchDevice) return;
     rawX.set(0);
     rawY.set(0);
     glowX.set(50);
@@ -388,7 +391,7 @@ const MagneticDot: React.FC<{ i: number }> = ({ i }) => {
 
   const handleMove = useCallback(
     (e: React.MouseEvent) => {
-      if (!dotRef.current) return;
+      if (isTouchDevice || !dotRef.current) return;
       const rect = dotRef.current.getBoundingClientRect();
       const cx = rect.left + rect.width / 2;
       const cy = rect.top + rect.height / 2;
@@ -409,6 +412,7 @@ const MagneticDot: React.FC<{ i: number }> = ({ i }) => {
   );
 
   const handleEnter = useCallback(() => {
+    if (isTouchDevice) return;
     const id = rid.current++;
     setRipples((prev) => [...prev, { id, scale: 1 }]);
     setTimeout(() => {
@@ -417,6 +421,7 @@ const MagneticDot: React.FC<{ i: number }> = ({ i }) => {
   }, []);
 
   const handleLeave = useCallback(() => {
+    if (isTouchDevice) return;
     mX.set(0);
     mY.set(0);
   }, [mX, mY]);

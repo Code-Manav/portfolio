@@ -2,6 +2,8 @@ import React, { useRef, useCallback, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useMotionValue, useSpring, useInView } from 'framer-motion';
 import { FadeInUp, SkillBar } from './';
+import { isTouchDevice } from '../lib/isTouchDevice';
+import profileImg from '../assets/profile.jpeg';
 
 const skills = [
   { name: 'React.js', level: 95 },
@@ -82,7 +84,7 @@ const TiltStat: React.FC<{
 
   const handleMove = useCallback(
     (e: React.MouseEvent) => {
-      if (!ref.current) return;
+      if (isTouchDevice || !ref.current) return;
       const rect = ref.current.getBoundingClientRect();
       const dx = (e.clientX - rect.left) / rect.width - 0.5;
       const dy = (e.clientY - rect.top) / rect.height - 0.5;
@@ -92,6 +94,7 @@ const TiltStat: React.FC<{
     [x, y],
   );
   const handleLeave = useCallback(() => {
+    if (isTouchDevice) return;
     x.set(0);
     y.set(0);
   }, [x, y]);
@@ -113,197 +116,228 @@ const TiltStat: React.FC<{
   );
 };
 
-const AboutContent: React.FC = () => (
-  <section className="py-24 px-6 max-w-7xl mx-auto overflow-hidden">
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-      {/* Left */}
-      <div>
-        <FadeInUp>
-          <p className="section-label">How I Build Software</p>
-        </FadeInUp>
+const AboutContent: React.FC = () => {
+  const [isHovered, setIsHovered] = useState(false);
 
-        {/* WHO AM I? letter stagger */}
-        <motion.h1
-          className="section-title"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          {'WHO AM I?'.split('').map((ch, i) => (
-            <motion.span
-              key={i}
-              className={`inline-block ${ch === '?' ? 'text-accent' : ''}`}
-              variants={letterVariants}
-              custom={i}
-            >
-              {ch === ' ' ? '\u00A0' : ch}
-            </motion.span>
-          ))}
-        </motion.h1>
+  return (
+    <section className="py-24 px-6 max-w-7xl mx-auto overflow-hidden">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        {/* Left */}
+        <div>
+          <FadeInUp>
+            <p className="section-label">How I Build Software</p>
+          </FadeInUp>
 
-        {/* Bio 1 word reveal */}
-        <motion.p
-          className="text-foreground/65 text-lg leading-relaxed font-light mb-5"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          {bio1.map((word, i) => (
-            <React.Fragment key={i}>
+          {/* WHO AM I? letter stagger */}
+          <motion.h1
+            className="section-title"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
+            {'WHO AM I?'.split('').map((ch, i) => (
               <motion.span
-                className="inline-block"
-                variants={wordVariants}
+                key={i}
+                className={`inline-block ${ch === '?' ? 'text-accent' : ''}`}
+                variants={letterVariants}
                 custom={i}
               >
-                {word}
+                {ch === ' ' ? '\u00A0' : ch}
               </motion.span>
-              {i < bio1.length - 1 && '\u00A0'}
-            </React.Fragment>
-          ))}
-        </motion.p>
-
-        {/* Bio 2 word reveal */}
-        <motion.p
-          className="text-foreground/65 text-lg leading-relaxed font-light mb-5"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          {bio2.map((word, i) => (
-            <React.Fragment key={i}>
-              <motion.span
-                className="inline-block"
-                variants={wordVariants}
-                custom={i + bio1.length}
-              >
-                {word}
-              </motion.span>
-              {i < bio2.length - 1 && '\u00A0'}
-            </React.Fragment>
-          ))}
-        </motion.p>
-
-        {/* Bio 3 word reveal */}
-        <motion.p
-          className="text-foreground/65 text-lg leading-relaxed font-light mb-10"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          {bio3.map((word, i) => (
-            <React.Fragment key={i}>
-              <motion.span
-                className="inline-block"
-                variants={wordVariants}
-                custom={i + bio1.length + bio2.length}
-              >
-                {word}
-              </motion.span>
-              {i < bio3.length - 1 && '\u00A0'}
-            </React.Fragment>
-          ))}
-        </motion.p>
-
-        {/* Skill Bars */}
-        <FadeInUp delay={0.4} className="mb-10">
-          <motion.h3
-            className="text-sm font-black text-accent uppercase tracking-widest mb-6"
-            initial={{ opacity: 0, x: -10 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.4 }}
-          >
-            Technical Skills
-          </motion.h3>
-          <div className="space-y-4">
-            {skills.map((skill, index) => (
-              <SkillBar key={skill.name} skill={skill.name} level={skill.level} delay={0.5 + index * 0.1} />
             ))}
-          </div>
-        </FadeInUp>
+          </motion.h1>
 
-        <FadeInUp delay={1.2}>
-          <motion.div
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
-            transition={{ type: 'spring' as const, stiffness: 400, damping: 15 }}
+          {/* Bio 1 word reveal */}
+          <motion.p
+            className="text-foreground/65 text-lg leading-relaxed font-light mb-5"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
           >
-            <Link to="/contact" className="btn btn-primary inline-block">Start a Conversation</Link>
-          </motion.div>
-        </FadeInUp>
-      </div>
+            {bio1.map((word, i) => (
+              <React.Fragment key={i}>
+                <motion.span
+                  className="inline-block"
+                  variants={wordVariants}
+                  custom={i}
+                >
+                  {word}
+                </motion.span>
+                {i < bio1.length - 1 && '\u00A0'}
+              </React.Fragment>
+            ))}
+          </motion.p>
 
-      {/* Right — stat cards */}
-      <div className="flex justify-center lg:justify-end">
-        <div className="relative w-72 h-96">
-          {/* Main card */}
-          <TiltStat delay={0.3} className="absolute inset-0">
-            <div className="glass-card w-full h-full flex flex-col items-center justify-center rounded-3xl overflow-hidden">
-              <motion.div
-                className="w-full h-full bg-linear-to-br from-accent/25 to-background"
-                animate={{ backgroundPosition: ['0% 0%', '100% 100%', '0% 0%'] }}
-                transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' as const }}
-                style={{ backgroundSize: '200% 200%' }}
-              />
-              {/* Decorative dots */}
-              <div className="absolute inset-0 opacity-[0.03]"
-                style={{
-                  backgroundImage: 'radial-gradient(circle, hsl(var(--ac)) 1px, transparent 1px)',
-                  backgroundSize: '24px 24px',
-                }}
-              />
+          {/* Bio 2 word reveal */}
+          <motion.p
+            className="text-foreground/65 text-lg leading-relaxed font-light mb-5"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
+            {bio2.map((word, i) => (
+              <React.Fragment key={i}>
+                <motion.span
+                  className="inline-block"
+                  variants={wordVariants}
+                  custom={i + bio1.length}
+                >
+                  {word}
+                </motion.span>
+                {i < bio2.length - 1 && '\u00A0'}
+              </React.Fragment>
+            ))}
+          </motion.p>
+
+          {/* Bio 3 word reveal */}
+          <motion.p
+            className="text-foreground/65 text-lg leading-relaxed font-light mb-10"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
+            {bio3.map((word, i) => (
+              <React.Fragment key={i}>
+                <motion.span
+                  className="inline-block"
+                  variants={wordVariants}
+                  custom={i + bio1.length + bio2.length}
+                >
+                  {word}
+                </motion.span>
+                {i < bio3.length - 1 && '\u00A0'}
+              </React.Fragment>
+            ))}
+          </motion.p>
+
+          {/* Skill Bars */}
+          <FadeInUp delay={0.4} className="mb-10">
+            <motion.h3
+              className="text-sm font-black text-accent uppercase tracking-widest mb-6"
+              initial={{ opacity: 0, x: -10 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
+            >
+              Technical Skills
+            </motion.h3>
+            <div className="space-y-4">
+              {skills.map((skill, index) => (
+                <SkillBar key={skill.name} skill={skill.name} level={skill.level} delay={0.5 + index * 0.1} />
+              ))}
             </div>
-          </TiltStat>
+          </FadeInUp>
 
-          {/* Exp stat */}
-          <TiltStat delay={0.5} className="absolute -bottom-6 -left-6 w-40 h-32 z-10">
-            <div className="glass-card w-full h-full flex flex-col justify-center">
-              <motion.p
-                className="text-4xl font-black text-accent leading-none"
-                initial={{ scale: 0 }}
-                whileInView={{ scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.6, type: 'spring' as const, stiffness: 300, damping: 12 }}
-              >
-                <CountUp to={4} suffix=".5+" delay={0.65} />
-              </motion.p>
-              <p className="text-sm text-muted font-semibold mt-1">Years Experience</p>
-            </div>
-          </TiltStat>
+          <FadeInUp delay={1.2}>
+            <motion.div
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              transition={{ type: 'spring' as const, stiffness: 400, damping: 15 }}
+            >
+              <Link to="/contact" className="btn btn-primary inline-block">Start a Conversation</Link>
+            </motion.div>
+          </FadeInUp>
+        </div>
 
-          {/* Projects stat */}
-          <TiltStat delay={0.7} className="absolute -top-4 -right-4 w-36 h-24 z-10">
-            <div className="glass-card w-full h-full flex flex-col justify-center">
-              <motion.p
-                className="text-3xl font-black text-accent leading-none"
-                initial={{ scale: 0 }}
-                whileInView={{ scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.8, type: 'spring' as const, stiffness: 300, damping: 12 }}
-              >
-                <CountUp to={6} suffix="+" delay={0.85} />
-              </motion.p>
-              <p className="text-xs text-muted font-semibold mt-1">Projects Shipped</p>
-            </div>
-          </TiltStat>
+        {/* Right — stat cards */}
+        <div className="flex justify-center lg:justify-end">
+          <div
+            className="relative w-66 h-[50rem] sm:w-72 sm:h-[28rem] md:w-80 md:h-[32rem] lg:w-[26rem] lg:h-[58rem]"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          >
+            {/* Main card */}
+            <motion.div
+              className="absolute inset-0"
+              initial={{ opacity: 0, y: 30, scale: 0.9 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3, duration: 0.5, ease: 'easeOut' as const }}
+            >
+              <div className="glass-card w-full h-full flex flex-col items-center justify-center rounded-3xl overflow-hidden">
+                <motion.div
+                  className="w-full h-full"
+                  animate={{ scale: isHovered ? 1.08 : 1 }}
+                  transition={{ type: 'spring' as const, stiffness: 300, damping: 25 }}
+                >
+                  <img
+                    src={profileImg}
+                    alt="Manav Shori"
+                    className="w-full h-full object-cover"
+                  />
+                </motion.div>
+                {/* Decorative dots */}
+                <div className="absolute inset-0 opacity-[0.03]"
+                  style={{
+                    backgroundImage: 'radial-gradient(circle, hsl(var(--ac)) 1px, transparent 1px)',
+                    backgroundSize: '24px 24px',
+                  }}
+                />
+              </div>
+            </motion.div>
 
-          {/* Floating glow */}
-          <motion.div
-            className="absolute -top-10 -right-10 w-48 h-48 bg-accent/15 rounded-full blur-3xl pointer-events-none"
-            animate={{
-              scale: [1, 1.15, 1],
-              opacity: [0.5, 0.8, 0.5],
-            }}
-            transition={{
-              duration: 4,
-              repeat: Infinity,
-              ease: 'easeInOut' as const,
-            }}
-          />
+            {/* Exp stat */}
+            <motion.div
+              className="absolute -bottom-5 -left-5 sm:-bottom-6 sm:-left-6 md:-bottom-7 md:-left-7 lg:-bottom-8 lg:-left-8 w-32 h-28 sm:w-36 sm:h-32 md:w-40 md:h-36 lg:w-48 lg:h-40 z-10"
+              animate={{ opacity: isHovered ? 0.2 : 1 }}
+              transition={{ duration: 0.3 }}
+            >
+              <TiltStat delay={0.5} className="w-full h-full">
+                <div className="glass-card w-full h-full flex flex-col justify-center">
+                  <motion.p
+                    className="text-3xl sm:text-3xl md:text-4xl lg:text-4xl font-black text-accent leading-none"
+                    initial={{ scale: 0 }}
+                    whileInView={{ scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.6, type: 'spring' as const, stiffness: 300, damping: 12 }}
+                  >
+                    <CountUp to={4} suffix=".5+" delay={0.65} />
+                  </motion.p>
+                  <p className="text-xs sm:text-sm md:text-sm lg:text-sm text-muted font-semibold mt-1">Years Experience</p>
+                </div>
+              </TiltStat>
+            </motion.div>
+
+            {/* Projects stat */}
+            <motion.div
+              className="absolute -top-4 -right-4 sm:-top-5 sm:-right-5 md:-top-5 md:-right-5 lg:-top-6 lg:-right-6 w-32 h-24 sm:w-36 sm:h-28 md:w-40 md:h-28 lg:w-44 lg:h-32 z-10"
+              animate={{ opacity: isHovered ? 0.2 : 1 }}
+              transition={{ duration: 0.3 }}
+            >
+              <TiltStat delay={0.7} className="w-full h-full">
+                <div className="glass-card w-full h-full flex flex-col justify-center">
+                  <motion.p
+                    className="text-2xl sm:text-2xl md:text-3xl lg:text-3xl font-black text-accent leading-none"
+                    initial={{ scale: 0 }}
+                    whileInView={{ scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.8, type: 'spring' as const, stiffness: 300, damping: 12 }}
+                  >
+                    <CountUp to={6} suffix="+" delay={0.85} />
+                  </motion.p>
+                  <p className="text-[10px] sm:text-xs md:text-xs lg:text-xs text-muted font-semibold mt-1">Projects Shipped</p>
+                </div>
+              </TiltStat>
+            </motion.div>
+
+            {/* Floating glow */}
+            <motion.div
+              className="absolute -top-10 -right-10 w-48 h-48 bg-accent/15 rounded-full blur-3xl pointer-events-none"
+              animate={{
+                scale: [1, 1.15, 1],
+                opacity: [0.5, 0.8, 0.5],
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: 'easeInOut' as const,
+              }}
+            />
+          </div>
         </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 export default AboutContent;

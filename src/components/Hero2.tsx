@@ -6,6 +6,7 @@ import {
   useMotionValue,
   useSpring,
 } from 'framer-motion';
+import { isTouchDevice } from '../lib/isTouchDevice';
 
 interface Hero2Props {
   heading: string;
@@ -88,7 +89,7 @@ const Hero2: React.FC<Hero2Props> = ({ heading, text, img }) => {
 
   const handleMouseMove = useCallback(
     (e: React.MouseEvent) => {
-      if (!sectionRef.current) return;
+      if (isTouchDevice || !sectionRef.current) return;
       const rect = sectionRef.current.getBoundingClientRect();
       const cx = rect.left + rect.width / 2;
       const cy = rect.top + rect.height / 2;
@@ -99,6 +100,7 @@ const Hero2: React.FC<Hero2Props> = ({ heading, text, img }) => {
   );
 
   const handleMouseLeave = useCallback(() => {
+    if (isTouchDevice) return;
     tiltX.set(0);
     tiltY.set(0);
   }, [tiltX, tiltY]);

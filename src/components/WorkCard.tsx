@@ -1,5 +1,6 @@
 import React, { useRef, useCallback, useState, useEffect } from 'react';
 import { motion, useMotionValue, useSpring, useAnimationFrame } from 'framer-motion';
+import { isTouchDevice } from '../lib/isTouchDevice';
 
 interface WorkCardProps {
   title: string;
@@ -81,7 +82,7 @@ const WorkCard: React.FC<WorkCardProps> = ({ title, description, tags, featured,
   /* ── Mouse ── */
   const handleMove = useCallback(
     (e: React.MouseEvent) => {
-      if (!cardRef.current) return;
+      if (isTouchDevice || !cardRef.current) return;
       const rect = cardRef.current.getBoundingClientRect();
       const dx = (e.clientX - rect.left) / rect.width - 0.5;
       const dy = (e.clientY - rect.top) / rect.height - 0.5;
@@ -101,12 +102,14 @@ const WorkCard: React.FC<WorkCardProps> = ({ title, description, tags, featured,
   );
 
   const handleEnter = useCallback(() => {
+    if (isTouchDevice) return;
     setIsHovered(true);
     startScramble();
     imgScale.set(1.15);
   }, [startScramble, imgScale]);
 
   const handleLeave = useCallback(() => {
+    if (isTouchDevice) return;
     rx.set(0); ry.set(0); imgX.set(0); imgY.set(0); glowX.set(50); glowY.set(50);
     setIsHovered(false);
     stopScramble();

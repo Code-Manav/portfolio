@@ -2,6 +2,7 @@ import React, { useState, useRef, useCallback } from 'react';
 import { motion, AnimatePresence, useAnimation } from 'framer-motion';
 import { SiReact, SiNextdotjs, SiTypescript, SiJavascript, SiAngular, SiNodedotjs, SiExpress, SiMongodb, SiGit } from 'react-icons/si';
 import { FiServer, FiTrendingUp, FiEye } from 'react-icons/fi';
+import { isTouchDevice } from '../lib/isTouchDevice';
 
 interface TechItem {
   name: string;
@@ -256,6 +257,7 @@ const TechMarquee: React.FC = () => {
 
   const popupPos = useRef({ x: 0, y: 0 });
   const onItemHover = useCallback((e: React.MouseEvent, item: TechItem) => {
+    if (isTouchDevice) return;
     if (closeTimeout.current) clearTimeout(closeTimeout.current);
     popupPos.current = {
       x: window.innerWidth / 2,

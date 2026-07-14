@@ -9,6 +9,7 @@ import {
 } from 'framer-motion';
 import IntroImage from '../assets/intro-bg.jpg';
 import { TextReveal } from './';
+import { isTouchDevice } from '../lib/isTouchDevice';
 
 const r = (a: number, b: number) => Math.random() * (b - a) + a;
 
@@ -63,7 +64,7 @@ const HeroImage: React.FC = () => {
 
   const handleMouseMove = useCallback(
     (e: React.MouseEvent) => {
-      if (!sectionRef.current) return;
+      if (isTouchDevice || !sectionRef.current) return;
       const rect = sectionRef.current.getBoundingClientRect();
       const cx = rect.left + rect.width / 2;
       const cy = rect.top + rect.height / 2;
@@ -79,15 +80,16 @@ const HeroImage: React.FC = () => {
   );
 
   const handleMouseLeave = useCallback(() => {
+    if (isTouchDevice) return;
     tiltX.set(0);
     tiltY.set(0);
     spotlightX.set(50);
     spotlightY.set(50);
   }, [tiltX, tiltY, spotlightX, spotlightY]);
 
-  const btn1Offset = useMemo(() => magneticButton(btn1Ref, mousePos.x, mousePos.y), [mousePos]);
-  const btn2Offset = useMemo(() => magneticButton(btn2Ref, mousePos.x, mousePos.y, 5), [mousePos]);
-  const badgeOffset = useMemo(() => magneticButton(badgeRef, mousePos.x, mousePos.y, 4), [mousePos]);
+  const btn1Offset = useMemo(() => isTouchDevice ? { x: 0, y: 0 } : magneticButton(btn1Ref, mousePos.x, mousePos.y), [mousePos]);
+  const btn2Offset = useMemo(() => isTouchDevice ? { x: 0, y: 0 } : magneticButton(btn2Ref, mousePos.x, mousePos.y, 5), [mousePos]);
+  const badgeOffset = useMemo(() => isTouchDevice ? { x: 0, y: 0 } : magneticButton(badgeRef, mousePos.x, mousePos.y, 4), [mousePos]);
 
   const nameLetters = 'MANAV'.split('');
 
