@@ -316,6 +316,35 @@ const HeroImage: React.FC = () => {
               <span className="relative z-10">Let's Collaborate</span>
             </Link>
           </motion.div>
+
+          {/* Download Resume */}
+          <motion.div
+            transition={{ type: 'spring' as const, stiffness: 150, damping: 15 }}
+          >
+            <a
+              href="https://drive.google.com/uc?export=download&id=1HC6AErFoQdvHVj7P2TeiwFs7LpJNZysS"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-outline min-w-[200px] relative overflow-hidden group"
+            >
+              <motion.span
+                className="absolute inset-0 bg-linear-to-r from-transparent via-accent/10 to-transparent pointer-events-none"
+                initial={{ x: '-100%' }}
+                whileHover={{ x: '200%' }}
+                transition={{ duration: 0.6, ease: 'easeInOut' as const }}
+              />
+              <motion.span className="relative z-10 flex items-center gap-2 justify-center">
+                Download Resume
+                <motion.span
+                  className="inline-block"
+                  animate={{ y: [0, 3, 0] }}
+                  transition={{ duration: 1.2, repeat: Infinity, ease: 'easeInOut' as const, delay: 1.5 }}
+                >
+                  ↓
+                </motion.span>
+              </motion.span>
+            </a>
+          </motion.div>
         </motion.div>
       </motion.div>
 

@@ -50,7 +50,7 @@ interface Job { company: string; role: string; duration: string; location: strin
 const jobs: Job[] = [
   {
     company: "Avdevs Solutions",
-    role: "Senior Full-Stack Engineer",
+    role: "Senior Software Engineer",
     duration: "2023 – Present",
     location: "Vadodara, Gujarat",
     tags: ["React", "Next.js", "Azure", "AWS", "MSSQL", "Sequelize", "CI/CD", "Enterprise systems"],
@@ -66,7 +66,7 @@ const jobs: Job[] = [
   },
   {
     company: "InnovateMR",
-    role: "MEAN Stack Engineer",
+    role: "Software Engineer",
     duration: "2021 – 2023",
     location: "Vadodara, Gujarat",
     tags: ["Angular", "Node.js", "Express", "MongoDB", "Authentication", "APIs"],

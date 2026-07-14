@@ -117,7 +117,6 @@ const TiltStat: React.FC<{
 };
 
 const AboutContent: React.FC = () => {
-  const [isHovered, setIsHovered] = useState(false);
 
   return (
     <section className="py-24 px-6 max-w-7xl mx-auto overflow-hidden">
@@ -239,14 +238,12 @@ const AboutContent: React.FC = () => {
           </FadeInUp>
         </div>
 
-        {/* Right — stat cards */}
-        <div className="flex justify-center lg:justify-end">
+        {/* Right — photo + stat cards */}
+        <div className="flex flex-col items-center lg:items-end gap-5">
+          {/* Photo frame */}
           <div
-            className="relative w-66 h-[50rem] sm:w-72 sm:h-[28rem] md:w-80 md:h-[32rem] lg:w-[26rem] lg:h-[58rem]"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
+            className="relative w-72 h-[28rem] sm:w-80 sm:h-[32rem] md:w-[22rem] md:h-[36rem] lg:w-[24rem] lg:h-[50rem]"
           >
-            {/* Main card */}
             <motion.div
               className="absolute inset-0"
               initial={{ opacity: 0, y: 30, scale: 0.9 }}
@@ -254,19 +251,12 @@ const AboutContent: React.FC = () => {
               viewport={{ once: true }}
               transition={{ delay: 0.3, duration: 0.5, ease: 'easeOut' as const }}
             >
-              <div className="glass-card w-full h-full flex flex-col items-center justify-center rounded-3xl overflow-hidden">
-                <motion.div
-                  className="w-full h-full"
-                  animate={{ scale: isHovered ? 1.08 : 1 }}
-                  transition={{ type: 'spring' as const, stiffness: 300, damping: 25 }}
-                >
-                  <img
-                    src={profileImg}
-                    alt="Manav Shori"
-                    className="w-full h-full object-cover"
-                  />
-                </motion.div>
-                {/* Decorative dots */}
+              <div className="glass-card w-full h-full flex flex-col items-center justify-center rounded-[2rem] overflow-hidden">
+                <img
+                  src={profileImg}
+                  alt="Manav Shori"
+                  className="w-full h-full object-cover"
+                />
                 <div className="absolute inset-0 opacity-[0.03]"
                   style={{
                     backgroundImage: 'radial-gradient(circle, hsl(var(--ac)) 1px, transparent 1px)',
@@ -274,50 +264,6 @@ const AboutContent: React.FC = () => {
                   }}
                 />
               </div>
-            </motion.div>
-
-            {/* Exp stat */}
-            <motion.div
-              className="absolute -bottom-5 -left-5 sm:-bottom-6 sm:-left-6 md:-bottom-7 md:-left-7 lg:-bottom-8 lg:-left-8 w-32 h-28 sm:w-36 sm:h-32 md:w-40 md:h-36 lg:w-48 lg:h-40 z-10"
-              animate={{ opacity: isHovered ? 0.2 : 1 }}
-              transition={{ duration: 0.3 }}
-            >
-              <TiltStat delay={0.5} className="w-full h-full">
-                <div className="glass-card w-full h-full flex flex-col justify-center">
-                  <motion.p
-                    className="text-3xl sm:text-3xl md:text-4xl lg:text-4xl font-black text-accent leading-none"
-                    initial={{ scale: 0 }}
-                    whileInView={{ scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.6, type: 'spring' as const, stiffness: 300, damping: 12 }}
-                  >
-                    <CountUp to={4} suffix=".5+" delay={0.65} />
-                  </motion.p>
-                  <p className="text-xs sm:text-sm md:text-sm lg:text-sm text-muted font-semibold mt-1">Years Experience</p>
-                </div>
-              </TiltStat>
-            </motion.div>
-
-            {/* Projects stat */}
-            <motion.div
-              className="absolute -top-4 -right-4 sm:-top-5 sm:-right-5 md:-top-5 md:-right-5 lg:-top-6 lg:-right-6 w-32 h-24 sm:w-36 sm:h-28 md:w-40 md:h-28 lg:w-44 lg:h-32 z-10"
-              animate={{ opacity: isHovered ? 0.2 : 1 }}
-              transition={{ duration: 0.3 }}
-            >
-              <TiltStat delay={0.7} className="w-full h-full">
-                <div className="glass-card w-full h-full flex flex-col justify-center">
-                  <motion.p
-                    className="text-2xl sm:text-2xl md:text-3xl lg:text-3xl font-black text-accent leading-none"
-                    initial={{ scale: 0 }}
-                    whileInView={{ scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.8, type: 'spring' as const, stiffness: 300, damping: 12 }}
-                  >
-                    <CountUp to={6} suffix="+" delay={0.85} />
-                  </motion.p>
-                  <p className="text-[10px] sm:text-xs md:text-xs lg:text-xs text-muted font-semibold mt-1">Projects Shipped</p>
-                </div>
-              </TiltStat>
             </motion.div>
 
             {/* Floating glow */}
@@ -333,6 +279,69 @@ const AboutContent: React.FC = () => {
                 ease: 'easeInOut' as const,
               }}
             />
+          </div>
+
+          {/* Stat cards grid */}
+          <div className="grid grid-cols-2 gap-4">
+            <TiltStat delay={0.5} className="w-36 h-28 sm:w-40 sm:h-32 md:w-44 md:h-36 lg:w-48 lg:h-40">
+              <div className="glass-card w-full h-full flex flex-col justify-center">
+                <motion.p
+                  className="text-3xl sm:text-3xl md:text-4xl lg:text-4xl font-black text-accent leading-none"
+                  initial={{ scale: 0 }}
+                  whileInView={{ scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.6, type: 'spring' as const, stiffness: 300, damping: 12 }}
+                >
+                  <CountUp to={4} suffix=".5+" delay={0.65} />
+                </motion.p>
+                <p className="text-xs sm:text-sm md:text-sm lg:text-sm text-muted font-semibold mt-1">Years Experience</p>
+              </div>
+            </TiltStat>
+
+            <TiltStat delay={0.7} className="w-36 h-28 sm:w-40 sm:h-32 md:w-44 md:h-36 lg:w-48 lg:h-40">
+              <div className="glass-card w-full h-full flex flex-col justify-center">
+                <motion.p
+                  className="text-3xl sm:text-3xl md:text-4xl lg:text-4xl font-black text-accent leading-none"
+                  initial={{ scale: 0 }}
+                  whileInView={{ scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.8, type: 'spring' as const, stiffness: 300, damping: 12 }}
+                >
+                  <CountUp to={6} suffix="+" delay={0.85} />
+                </motion.p>
+                <p className="text-xs sm:text-sm md:text-sm lg:text-sm text-muted font-semibold mt-1">Projects Shipped</p>
+              </div>
+            </TiltStat>
+
+            <TiltStat delay={0.9} className="w-36 h-28 sm:w-40 sm:h-32 md:w-44 md:h-36 lg:w-48 lg:h-40">
+              <div className="glass-card w-full h-full flex flex-col justify-center">
+                <motion.p
+                  className="text-3xl sm:text-3xl md:text-4xl lg:text-4xl font-black text-accent leading-none"
+                  initial={{ scale: 0 }}
+                  whileInView={{ scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 1.0, type: 'spring' as const, stiffness: 300, damping: 12 }}
+                >
+                  <CountUp to={5} suffix="+" delay={1.05} />
+                </motion.p>
+                <p className="text-xs sm:text-sm md:text-sm lg:text-sm text-muted font-semibold mt-1">Clients</p>
+              </div>
+            </TiltStat>
+
+            <TiltStat delay={1.1} className="w-36 h-28 sm:w-40 sm:h-32 md:w-44 md:h-36 lg:w-48 lg:h-40">
+              <div className="glass-card w-full h-full flex flex-col justify-center">
+                <motion.p
+                  className="text-3xl sm:text-3xl md:text-4xl lg:text-4xl font-black text-accent leading-none"
+                  initial={{ scale: 0 }}
+                  whileInView={{ scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 1.2, type: 'spring' as const, stiffness: 300, damping: 12 }}
+                >
+                  <CountUp to={15} suffix="+" delay={1.25} />
+                </motion.p>
+                <p className="text-xs sm:text-sm md:text-sm lg:text-sm text-muted font-semibold mt-1">Technologies</p>
+              </div>
+            </TiltStat>
           </div>
         </div>
       </div>
